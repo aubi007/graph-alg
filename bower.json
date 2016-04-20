@@ -1,0 +1,11 @@
+{
+  "name": "graph-alg",
+  "description": "AngularJS graph algorithms demo app",
+  "version": "0.0.1",
+  "homepage": "https://github.com/aubi007/graph-alg",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "angular": "~1.4.3"
+  }
+}
