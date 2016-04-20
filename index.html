@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" ng-app="graphApp">
+<head>
+  <meta charset="utf-8">
+  <title>Graph Algorithms</title>
+  <link rel="stylesheet" href="app.css">
+  <script src="angular.js"></script>
+  <script src="graph.js"></script>
+  <script src="canvas.js"></script>
+</head>
+<body ng-controller="AppCtrl">
+	<h3>Graph Algorithms</h3>
+	
+	<graph-canvas></graph-canvas>
+	
+	<h4>Vertices</h4>
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>ID&nbsp;</th>
+				<th>X&nbsp;</th>
+				<th>Y&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="v in graph.vertices">
+				<td>{{$index}}</td>
+				<td>{{v.x}}</td>
+				<td>{{v.y}}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h4>Edges</h4>
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>From&nbsp;</th>
+				<th>To&nbsp;</th>
+				<th>Weight&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="e in graph.edges">
+				<td>{{e.from}}</td>
+				<td>{{e.to}}</td>
+				<td>{{e.weight}}</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+</body>
+</html>
+
