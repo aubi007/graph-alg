@@ -14,14 +14,14 @@ graphApp.controller('AppCtrl', function ($scope, $document) {
   //adds a new vertex to position x:y
   $scope.addVertex = function (x, y) {
   	var pos = $scope.graph.vertices.length;
-  	$scope.graph.vertices[pos] = {x:x, y:y};
+  	$scope.graph.vertices[pos] = {x:x, y:y, colour:"black"};
   	return pos
   };
 
   // adds a new edge from a vertrex with index from to a vertex with index to with a defined weight
   $scope.addEdge = function (from, to, weight) {
   	var pos = $scope.graph.edges.length;
-  	$scope.graph.edges[pos] = {from:from, to:to, weight:weight};
+  	$scope.graph.edges[pos] = {from:from, to:to, weight:weight, colour:"black"};
   	return pos
   };
   
