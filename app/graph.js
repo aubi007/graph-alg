@@ -8,8 +8,6 @@ graphApp.controller('AppCtrl', function ($scope, $document) {
   $scope.graph = [];
   $scope.graph.vertices = [];
   $scope.graph.edges = [];
-  $scope.graph.selectedVertex = -1;
-  $scope.tst = 'tst';
   
   //adds a new vertex to position x:y
   $scope.addVertex = function (x, y) {
@@ -29,6 +27,7 @@ graphApp.controller('AppCtrl', function ($scope, $document) {
 	var maxDistance = 99.99;
 	var ret = -1;
 
+	// finds the vertex at position x:y
 	for (var i = 0; i < $scope.graph.vertices.length; i++) {
 		var vx = $scope.graph.vertices[i].x;
 		var vy = $scope.graph.vertices[i].y;
@@ -41,7 +40,18 @@ graphApp.controller('AppCtrl', function ($scope, $document) {
 			maxDistance = dist;
 		}
    	}
-	
+
+	// finds the edge ID that connects the two vertices, or -1
+    $scope.findEdgeByVertices = function (v1, v2) {
+		for (var i = 0; i < $scope.graph.edges.length; i++) {
+			if (($scope.graph.edges[i].from == v1) && ($scope.graph.edges[i].to == v2) ||
+				($scope.graph.edges[i].from == v2) && ($scope.graph.edges[i].to == v1)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
     return ret;
   }
   
