@@ -136,7 +136,6 @@ canvasDirective.directive('graphCanvas', function() {
 			ctx.fillStyle = "white";
 			ctx.clearRect(0, 0, c.width, c.height);
 
-			console.log(alg);
 			// draw vertices
 			for (var i = 0; i < scope.graph.vertices.length; i++) {
 				var v = scope.graph.vertices[i];
@@ -165,9 +164,9 @@ canvasDirective.directive('graphCanvas', function() {
 			// draw edges
 			ctx.font = "10px Arial";
 			for (var i = 0; i < scope.graph.edges.length; i++) {
-				var e = scope.graph.edges[i];
-				var v1 = scope.graph.vertices[e.from];
-				var v2 = scope.graph.vertices[e.to];
+				var e = scope.getEdge(i);
+				var v1 = e.from;
+				var v2 = e.to;
 
 				ctx.beginPath();
 				ctx.moveTo(v1.x, v1.y);
@@ -175,12 +174,14 @@ canvasDirective.directive('graphCanvas', function() {
 				ctx.stroke();
 
 				// draw the line weight
-				ctx.fillText(e.weight, (v1.x + v2.x) / 2,
-						(v1.y + v2.y) / 2);
+				ctx.fillText(e.weight, (v1.x + v2.x) / 2, (v1.y + v2.y) / 2);
 			}
 		}
 		
 		scope.buttonDijkstra = function() {
+			set_create('V');
+			set_push('V', 'v1');
+			/*
 			if (alg == 'dijkstra') {
 				// find the shor
 			} else {
@@ -212,7 +213,51 @@ canvasDirective.directive('graphCanvas', function() {
 				drawGraph();
 //				scope.$apply();
 			}
+			*/
 		}
+
+		/* 
+		 * graph algorithm commands
+		 */
+		// create the algorithm variable space
+		scope.alg = [];
+		scope.alg.v1 = scope.graph.vertices[0];
+		function set_create(name) {
+			scope.$eval('alg.' + name + '=[];');
+//			console.log(scope.alg);
+		}
+		function set_push(name, object) {
+//			console.log(scope.$eval('alg.' + name));
+			var expr = 'alg.' + name + '.push(alg.' + object + ')';
+			console.log(expr);
+			scope.$eval(expr);
+			console.log(scope.alg)
+		}
+/*
+ * 1  function Dijkstra(Graph, source):
+ 2
+ 3      create vertex set Q
+ 4
+ 5      for each vertex v in Graph:             // Initialization
+ 6          dist[v] ← INFINITY                  // Unknown distance from source to v
+ 7          prev[v] ← UNDEFINED                 // Previous node in optimal path from source
+ 8          add v to Q                          // All nodes initially in Q (unvisited nodes)
+ 9
+10      dist[source] ← 0                        // Distance from source to source
+11      
+12      while Q is not empty:
+13          u ← vertex in Q with min dist[u]    // Source node will be selected first
+14          remove u from Q 
+15          
+16          for each neighbor v of u:           // where v is still in Q.
+17              alt ← dist[u] + length(u, v)
+18              if alt < dist[v]:               // A shorter path to v has been found
+19                  dist[v] ← alt 
+20                  prev[v] ← u 
+21
+22      return dist[], prev[]
+*/
+
 	}
 
 	return {
@@ -224,7 +269,7 @@ canvasDirective.directive('graphCanvas', function() {
 				+ '<button ng-click="buttonSelect()">Select</button>'
 				+ '<button ng-click="buttonAddVertex()">Add Vertex</button>'
 				+ '<button ng-click="buttonDijkstra()">Dijkstra</button>'
-				+ '</br>{{graph.edges}}</br>{{graph.vertices}}</div>'
+				+ '</br>{{alg.V}}</br>{{graph.edges}}</br>{{graph.vertices}}</div>'
 	};
 
 });
